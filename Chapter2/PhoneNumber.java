@@ -4,6 +4,7 @@ import java.security.cert.PolicyNode;
 
 public final class PhoneNumber {
     private final short areaCode, prefix, lineNum;
+    private int hashCode;
 
     public PhoneNumber(int areaCode, int prefix, int lineNum){
         this.areaCode = rangeCheck(areaCode, 999, "area code");
@@ -28,6 +29,19 @@ public final class PhoneNumber {
         PhoneNumber pn = (PhoneNumber)o;
         return pn.lineNum == lineNum && pn.prefix == prefix && pn.areaCode == areaCode;
     }
+
+    @Override public int hashCode(){
+        int result = hashCode;
+        if(result == 0){
+            result = Short.hashCode(areaCode);
+            result = 31 * result + Short.hashCode(prefix);
+            result = 31 * result + Short.hashCode(lineNum);
+            hashCode = result;
+        }
+
+        return result;
+    }
+
 
     public static void main(String[] args) {
 
